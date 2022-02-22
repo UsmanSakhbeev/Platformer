@@ -7,10 +7,11 @@ public class Hero : MonoBehaviour
     [SerializeField] private float speed = 3f; // скорость движения
     [SerializeField] private int lives = 5; // скорость движения
     [SerializeField] private float jumpForce = 15f; // сила прыжка
+    [SerializeField] private SpriteRenderer sprite;
     private bool isGrounded = false;
 
     private Rigidbody2D rb;
-    private SpriteRenderer sprite;
+    //private SpriteRenderer sprite;
     private Animator anim;
 
     private States State
@@ -21,8 +22,7 @@ public class Hero : MonoBehaviour
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        sprite = GetComponentInChildren<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();             
         anim = GetComponent<Animator>();
     }
 
