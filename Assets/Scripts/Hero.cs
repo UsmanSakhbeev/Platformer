@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hero : MonoBehaviour
+public class Hero : Entity
 {
     [SerializeField] private float speed = 3f; // скорость движения
     [SerializeField] private int lives = 5; // скорость движения
@@ -11,8 +11,9 @@ public class Hero : MonoBehaviour
     private bool isGrounded = false;
 
     private Rigidbody2D rb;
-    //private SpriteRenderer sprite;
     private Animator anim;
+
+    public static Hero Instance { get; private set; }
 
     private States State
     {
@@ -22,6 +23,7 @@ public class Hero : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         rb = GetComponent<Rigidbody2D>();             
         anim = GetComponent<Animator>();
     }
@@ -64,6 +66,12 @@ public class Hero : MonoBehaviour
         if (!isGrounded)
             State = States.jump;
     }
+    public override void GetDamage()
+    {
+        lives -= 1;
+        Debug.Log(lives);
+    }
+
 }
 
 public enum States
