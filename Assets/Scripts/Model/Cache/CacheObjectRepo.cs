@@ -14,7 +14,7 @@ namespace Platformer
 
         #region Singleton
 
-        public CacheObjectRepo Instance;
+        public static CacheObjectRepo Instance;
 
         private void Awake() {
             Instance = this;

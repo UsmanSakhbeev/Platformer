@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace View
+namespace Platformer
 {
     public sealed class WepaonUIText: MonoBehaviour
     {
@@ -11,8 +11,8 @@ namespace View
             _text = GetComponent<Text>();
         }
 
-        public void ShowData(int ammoCount) {
-            _text.text = $"{ammoCount}";
+        public void ShowData(string info) {
+            _text.text = $"{info}";
         }
 
         public void SetActive(bool value) {

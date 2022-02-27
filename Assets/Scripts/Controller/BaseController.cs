@@ -1,10 +1,11 @@
-using Model;
 using UnityEngine;
 
-namespace Controller
+namespace Platformer
 {
     public abstract class BaseController : MonoBehaviour
     {
+        protected UIInterface UiInterface;
+
         public bool  IsActive { get; private set; }
 
         public virtual void On() {

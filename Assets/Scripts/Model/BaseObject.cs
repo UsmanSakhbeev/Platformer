@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Model
+namespace Platformer
 {
     /// <summary>
     /// Базовая модель объекта находящегося на сцене
@@ -15,7 +15,7 @@ namespace Model
         [HideInInspector] public Rigidbody2D Rigidbody;
         [HideInInspector] public Transform Transform;
 
-        private void Awake() {
+        protected virtual void Awake() {
             Rigidbody = GetComponent<Rigidbody2D>();
             Transform = GetComponent<Transform>();
         }
