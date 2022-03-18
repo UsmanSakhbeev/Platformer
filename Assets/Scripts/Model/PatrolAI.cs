@@ -6,48 +6,48 @@ public class PatrolAI : MonoBehaviour
 {
     [SerializeField] Transform player;
     [SerializeField] float agroRange;
+    [SerializeField] Animator animator;
 
-    private float distanceToPlayer;
-    private bool mustPatrol;
-    private bool mustTurn;
-    private bool mustChase;
-    private RaycastHit2D groundInfo;
-    private Animator anim;
+    private float _distanceToPlayer;
+    private bool _mustPatrol;
+    private bool _mustTurn;
+    private bool _mustChase;
+    private RaycastHit2D _groundInfo;
+    private RaycastHit2D _playerInfo;
 
     public Rigidbody2D rb;
     public float speed;
     public LayerMask groundLayer;
-    public Collider2D bodyColluder;
+    public Collider2D bodyCollider;
     public Transform groundDetection;
 
 
     private void Awake()
-    {        
-        anim = GetComponent<Animator>();       
-        distanceToPlayer = Vector2.Distance(transform.position, player.position);
+    {                
+        _distanceToPlayer = Vector2.Distance(transform.position, player.position);
     }
     private void Update()
     {
         GroundChecking();
         PlayerSearching();
-        distanceToPlayer = Vector2.Distance(transform.position, player.position);        
-        if (mustPatrol)
+        _distanceToPlayer = Vector2.Distance(transform.position, player.position);        
+        if (_mustPatrol)
         {
             Patrol();
         }
-        if (mustChase)
+        if (_mustChase)
         {
             PlayerChase();
         }        
     }
     void Patrol()
     {
-        anim.Play("run");
+        animator.Play("run");
         rb.velocity = new Vector2(speed, 0);        
-        if (mustTurn || bodyColluder.IsTouchingLayers(groundLayer)) 
+        if (_mustTurn || bodyCollider.IsTouchingLayers(groundLayer)) 
         {
             Flip();
-            mustTurn = false;
+            _mustTurn = false;
         }
     }
     void  PlayerChase()
@@ -65,7 +65,7 @@ public class PatrolAI : MonoBehaviour
     }
     void Flip()
     {
-        mustPatrol = false;
+        _mustPatrol = false;
         if (rb.velocity.x > 0)
         {
             transform.localScale = new Vector2(-1, 1);
@@ -75,27 +75,28 @@ public class PatrolAI : MonoBehaviour
             transform.localScale = new Vector2(1, 1);
         }
         speed *= -1;
-        mustPatrol = true;
+        _mustPatrol = true;
     }
     void GroundChecking()
     {
-        groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, 2);        
-        if (groundInfo.collider == null)
+        _groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, 2);        
+        if (_groundInfo.collider == null)
         {
-            mustTurn = true;
+            _mustTurn = true;
         }
     }
     void PlayerSearching()
     {
-        if(distanceToPlayer <= agroRange)
+        //_playerInfo = Physics2D.CircleCast(transform.position, 5, Vector2., LayerMask.GetMask("Player"));
+        if(_distanceToPlayer <= agroRange)
         {
-            mustPatrol = false;
-            mustChase = true;
+            _mustPatrol = false;
+            _mustChase = true;
         }
         else
         {
-            mustPatrol = true;
-            mustChase = false;
+            _mustPatrol = true;
+            _mustChase = false;
         }
     }
 }
